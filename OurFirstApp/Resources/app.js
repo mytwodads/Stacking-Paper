@@ -88,6 +88,8 @@ tabGroup.open();
 
 //var win = Ti.UI.currentWindow;
 
+var smsNumbers = [];
+
 var values = {cancel:function() {info.text = 'Cancelled';}, fields:['phone'], selectedProperty:function(e) {
 			Ti.API.info('HELLO, I GOT HERE');
 			/*
@@ -99,7 +101,19 @@ if (e.property == 'address') {
 				info.text = e.value;
 			}
 */
-			if (e.value) info.text = e.value;
+			if (e.value) {
+				info.text = e.value;
+				smsNumbers.push(e.value);
+				l4.text = smsNumbers.length;
+				
+				
+				if (smsNumbers.length > 2) {
+					info.text = '';
+					for (var i = 0; i< smsNumbers.length; i++)	{
+					info.text = info.text + smsNumbers[i] + ', ';
+					}		
+				}
+			}
 		}};
 /* The statement below  uses the opens the address view in a tab 
 win3.addEventListener('open',function() {
@@ -207,17 +221,19 @@ if (s4.value) {
 });
 v3.add(l3);
 v3.add(s3);
-
+*/
 var v4 = Ti.UI.createView({
 	top:170,
 	width:300,
 	height:40,
 	left:10
 });
+
 var l4 = Ti.UI.createLabel({
-	text:'Stop on property:',
+	text:'',
 	left:0
 });
+/*
 var s4 = Ti.UI.createSwitch({
 	value:false,
 	right:10,
@@ -249,9 +265,11 @@ v4.add(s4);
 win3.add(v1);
 win3.add(v2);
 win3.add(v3);
+*/
 win3.add(v4);
+v4.add(l4);
 // Comment out these views if you want the EventListener to be the tab 
-*/ 
+ 
 win3.add(info);
 win3.add(show);
 
